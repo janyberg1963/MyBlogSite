@@ -7,3 +7,10 @@ def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     stuff_for_frontend = {'posts': posts}
     return render(request, 'Mysite/post_List.html', stuff_for_frontend)
+
+
+
+def post_detail(request, pk):
+    post = Post.objects.get(pk=pk)
+    stuff_for_frontend = {'post': post}
+    return render(request,  'Mysite/post-detail.html', stuff_for_frontend)
