@@ -1,39 +1,21 @@
-<!DOCTYPE html>
-<html>
+ {% extends "Mysite/base.html" %} 
+ {% block content %}
 
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
-</head>
+ {% for post in posts %}
 
-<body>
-
-    <h1>
-        <a href="">JN Blog</a>
-    </h1>
-    {% for post in posts %}
-    <div>
-        <p>Published : {{ post.published_date }}</p>
-
-        <p>
-            <h1><a href="{% url 'post_detail' pk=post.pk %} ">{{ post.title }}</a></h1>
-        </p>
-        <p>{{ post.text | linebreaksbr }}</p>
+<div class="post">
+      <div class ="date">
+         <p>Published : {{ post.published_date }}</p>
+      </div>
+       <p>
+        <h1><a href="{% url 'post_detail' pk=post.pk %} ">{{ post.title }}</a></h1>
+      </p>
+      <p>{{ post.text | linebreaksbr }}</p>
 
 
-    </div>
-
-    {% endfor %}
+</div>
 
 
+{% endfor %}
 
-
-
-</body>
-
-
-</html>
+ {% endblock %}

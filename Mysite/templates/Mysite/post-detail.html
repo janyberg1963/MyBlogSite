@@ -1,26 +1,17 @@
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Blog</title>
-</head>
+{% extends 'Mysite/base.html' %}
 
-<body>
+{% block content %}
 
-    {% if post.published_date %}
-    <DIV>
-        {{ POST.published_date }}
-
-    </DIV>
-    {% endif %}
+<div class="post">
+ {% if post.published_date %}
+  <div class = "date">
+     {{ post.published_date }}
+  </div>
+ {% endif %}
     <h1>{{ post.title }}</h1>
 
-    <p>{{ post.text }}</p>
+     <p>{{ post.text }}</p>
+</div>
 
-</body>
-
-</html>
-</body>
-
-</html>
+{% endblock %}

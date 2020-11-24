@@ -6,7 +6,7 @@ from .models import Post
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     stuff_for_frontend = {'posts': posts}
-    return render(request, 'Mysite/post_List.html', stuff_for_frontend)
+    return render(request, 'Mysite/post_list.html', stuff_for_frontend)
 
 
 
