@@ -1,0 +1,18 @@
+
+
+{% extends "Mysite/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>New Post</h1>
+
+    <form method ="POST" class="post-form-blog">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">SAVE </button>
+    </form>
+
+
+{% endblock %}
+
