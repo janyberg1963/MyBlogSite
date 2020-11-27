@@ -32,3 +32,22 @@ def post_new(request):
         form = PostForm()
         stuff_for_frontend = {'form': form}
     return render(request, 'Mysite/post_edit.html',stuff_for_frontend)
+
+
+def post_edit(request, pk):
+    post = Post.objects.get(pk=pk)
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            user = User.objects.get(username='jeffa')
+            post = form.save(commit=False)
+            post.author = user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = PostForm(instance=post)
+        stuff_for_frontend = {'form': form}
+    return render(request,'Mysite/post_edit.html', stuff_for_frontend)
+            
+
