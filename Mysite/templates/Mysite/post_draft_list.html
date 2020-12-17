@@ -1,0 +1,27 @@
+
+{% extends "Mysite/base.html" %} 
+
+
+
+
+{% block content %}
+ <p>
+    {% for post in post %}
+
+        <div class="post">
+        <p class="date">Creaetd: {{ post.created_date }}</p>
+        <h1><a href ="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+        <p>{{ post.text|truncatechars:50}}</p>
+
+        </div>
+
+
+   
+    {% endfor %}
+</P>
+
+
+
+
+
+{% endblock %}

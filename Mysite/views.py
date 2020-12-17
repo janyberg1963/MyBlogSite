@@ -24,7 +24,6 @@ def post_new(request):
             user = User.objects.get(username='jeffa')
             post = form.save(commit=False)
             post.author = user
-            post.published_date = timezone.now()
             post.save()
             return redirect('post_detail', pk=post.pk)
 
@@ -42,12 +41,25 @@ def post_edit(request, pk):
             user = User.objects.get(username='jeffa')
             post = form.save(commit=False)
             post.author = user
-            post.published_date = timezone.now()
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm(instance=post)
         stuff_for_frontend = {'form': form}
     return render(request,'Mysite/post_edit.html', stuff_for_frontend)
+
+def post_draft_list(request):
+
+    post=Post.objects.filter(published_date__isnull=True).order_by('-created_date')
+    #print(post)
+    stuff_for_frontend = {'post':post}
+    return render(request,'Mysite/post_draft_list.html',stuff_for_frontend)
+
+def post_publish(request,pk):
+    post = Post.objects.get(pk=pk)
+    post.published()
+    return redirect('post_detail', pk=pk)
+
+
             
 
