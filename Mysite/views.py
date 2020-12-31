@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -17,6 +18,8 @@ def post_detail(request, pk):
     stuff_for_frontend = {'post': post}
     return render(request,  'Mysite/post-detail.html', stuff_for_frontend)
 
+@login_required
+
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -32,6 +35,7 @@ def post_new(request):
         stuff_for_frontend = {'form': form}
     return render(request, 'Mysite/post_edit.html',stuff_for_frontend)
 
+@login_required
 
 def post_edit(request, pk):
     post = Post.objects.get(pk=pk)
@@ -45,9 +49,10 @@ def post_edit(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm(instance=post)
-        stuff_for_frontend = {'form': form}
+        stuff_for_frontend = {'form': form, 'post': post}
     return render(request,'Mysite/post_edit.html', stuff_for_frontend)
 
+@login_required
 def post_draft_list(request):
 
     post=Post.objects.filter(published_date__isnull=True).order_by('-created_date')
@@ -55,6 +60,7 @@ def post_draft_list(request):
     stuff_for_frontend = {'post':post}
     return render(request,'Mysite/post_draft_list.html',stuff_for_frontend)
 
+@login_required
 def post_publish(request,pk):
     post = Post.objects.get(pk=pk)
     post.published()
