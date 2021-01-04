@@ -83,3 +83,10 @@ def add_comment_to_post(request, pk):
     else:
         form = CommentForm()
     return render(request, 'Mysite/add_comment_to_post.html',{'form': form})
+
+def comment_remove(request, pk ):
+    comment = Comment.objects.get(pk=pk)
+    #print(comment)
+    comment.delete()
+    return redirect('post_detail', pk=comment.post.pk)
+    
