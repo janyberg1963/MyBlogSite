@@ -8,13 +8,24 @@ from .models import Comment
 
 # Create your views here.
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    stuff_for_frontend = {'posts': posts}
+    posts = 
+    
+    
+    
+    
+    
+    !
+    Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    
+           
+    
+    stuff_for_frontend = {'posts': posts }
     return render(request, 'Mysite/post_list.html', stuff_for_frontend)
 
 
 
 def post_detail(request, pk):
+
     post = Post.objects.get(pk=pk)
     stuff_for_frontend = {'post': post}
     return render(request,  'Mysite/post-detail.html', stuff_for_frontend)
@@ -76,6 +87,7 @@ def add_comment_to_post(request, pk):
             comment = form.save(commit=False)
             comment.author = request.user
             comment.post = post
+            comment.approved = False
             comment.save()
             return redirect('post_detail', pk = post.pk)
 
@@ -90,3 +102,10 @@ def comment_remove(request, pk ):
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
     
+
+def comment_approve(request, pk):
+    comment = Comment.objects.get(pk=pk)
+    print(comment)
+    comment.approve()
+    return redirect('post_detail', pk=comment.post.pk)
+
