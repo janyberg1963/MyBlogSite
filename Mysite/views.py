@@ -8,14 +8,7 @@ from .models import Comment
 
 # Create your views here.
 def post_list(request):
-    posts = 
-    
-    
-    
-    
-    
-    !
-    Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     
            
     
@@ -78,7 +71,7 @@ def post_publish(request,pk):
     post.published()
     return redirect('post_detail', pk=pk)
 
-
+@login_required
 def add_comment_to_post(request, pk):
     post = Post.objects.get(pk=pk)
     if request.method =='POST':
@@ -95,14 +88,14 @@ def add_comment_to_post(request, pk):
     else:
         form = CommentForm()
     return render(request, 'Mysite/add_comment_to_post.html',{'form': form})
-
+@login_required
 def comment_remove(request, pk ):
     comment = Comment.objects.get(pk=pk)
     #print(comment)
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
     
-
+@login_required
 def comment_approve(request, pk):
     comment = Comment.objects.get(pk=pk)
     print(comment)
