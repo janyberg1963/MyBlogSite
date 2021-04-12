@@ -102,3 +102,8 @@ def comment_approve(request, pk):
     comment.approve()
     return redirect('post_detail', pk=comment.post.pk)
 
+@login_required
+def post_delete(request, pk):
+    post =  post = Post.objects.get(pk=pk)
+    post.delete()
+    return redirect('/',pk=post.pk)
